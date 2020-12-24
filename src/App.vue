@@ -8,10 +8,19 @@
     />
     <div id="nav" class="ui container">
       <div class="ui grid">
-        <div class="ui fluid tabular menu">
-          <router-link to="/practice01" class="item">01</router-link>
+        <!-- <div class="ui row">
+          <div class="ui fluid tabular menu">
+            <router-link to="/practice01" class="item">01</router-link>
+          </div>
+        </div> -->
+        <div class="ui row">
+          <router-view />
         </div>
-        <router-view />
+        <div class="ui row">
+          <a href="https://github.com/func09/music_practice">
+            <i class="ui icon github"></i>func09/music_practice
+          </a>
+        </div>
       </div>
     </div>
   </div>
