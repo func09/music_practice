@@ -1,4 +1,5 @@
 import * as Tone from "tone";
+import _ from "lodash";
 
 export default class Guitar {
   stringsSize: number;
@@ -17,6 +18,28 @@ export default class Guitar {
 
   getOpenFrequency(stringNo = 0): Tone.FrequencyClass {
     return Tone.Frequency(this.tunings[stringNo]);
+  }
+
+  getFret(stringNo = 0, fretNo = 0) {
+    return this.frets.find((fret) => {
+      return fret.stringNo == stringNo && fret.fretNo == fretNo;
+    });
+  }
+
+  get stringNos(): Array<number> {
+    return [...Array(this.stringsSize)].map((item, index) => {
+      return index;
+    });
+  }
+
+  get fretNos(): Array<number> {
+    return [...Array(this.fretsSize)].map((item, index) => {
+      return index;
+    });
+  }
+
+  get strings() {
+    return _.groupBy(_.sortBy(this.frets, ["stringNo", "fretNo"]), "stringNo");
   }
 
   get frets() {

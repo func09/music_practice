@@ -8,11 +8,12 @@
     />
     <div id="nav" class="ui container">
       <div class="ui grid">
-        <!-- <div class="ui row">
+        <div class="ui row">
           <div class="ui fluid tabular menu">
             <router-link to="/practice01" class="item">01</router-link>
+            <router-link to="/practice02" class="item">02</router-link>
           </div>
-        </div> -->
+        </div>
         <div class="ui row">
           <router-view />
         </div>
