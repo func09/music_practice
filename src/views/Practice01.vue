@@ -1,12 +1,12 @@
 <template>
   <div class="Plactice01">
-    <h1 class="ui header dividing">Guitar Frets List</h1>
-    <p>
+    <h1>Guitar Fret List</h1>
+    <p class="lead">
       Generate fret tones by tuning the open strings of a guitar.
     </p>
-    <table class="ui table celled striped small compact fixed unstackable">
+    <table class="table table-dark table-striped table-bordered table-sm">
       <thead>
-        <tr class="ui center aligned">
+        <tr class="text-center">
           <th>String No</th>
           <th>Fret No</th>
           <th>Note</th>
@@ -16,7 +16,7 @@
       </thead>
       <tbody>
         <tr
-          class="ui center aligned"
+          class="text-center"
           v-bind:key="fret.name"
           v-for="fret in guitar.frets"
         >
@@ -25,8 +25,11 @@
           <td>{{ fret.note }}</td>
           <td>{{ fret.frequency }}</td>
           <td>
-            <button class="ui button icon" v-on:click="playNote(fret.note)">
-              <i class="ui icon sound"></i>
+            <button
+              class="btn btn-secondary btn-sm"
+              v-on:click="playNote(fret.note)"
+            >
+              <i class="fas fa-headphones-alt"></i> PLAY
             </button>
           </td>
         </tr>

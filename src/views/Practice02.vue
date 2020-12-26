@@ -1,9 +1,7 @@
 <template>
   <div class="Plactice01">
-    <h1 class="ui header dividing">Guitar Fret Board</h1>
-    <table
-      class="ui table celled striped small compact fixed unstackable definition"
-    >
+    <h1>Guitar Fret Board</h1>
+    <table class="table">
       <thead>
         <tr class="ui center aligned">
           <th></th>

@@ -1,28 +1,71 @@
 <template>
   <div id="app">
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
-      integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ=="
-      crossorigin="anonymous"
-    />
-    <div id="nav" class="ui container">
-      <div class="ui grid">
-        <div class="ui row">
-          <div class="ui fluid tabular menu">
-            <router-link to="/practice01" class="item">01</router-link>
-            <router-link to="/practice02" class="item">02</router-link>
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container-fluid">
+        <span
+          class="navbar-brand mb-0 h1"
+          data-bs-toggle="modal"
+          data-bs-target="#menuModal"
+        >
+          <i class="fas fa-bars"></i>
+        </span>
+      </div>
+    </nav>
+
+    <div id="menuModal" class="modal fade" tabindex="-1">
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Menu</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
           </div>
-        </div>
-        <div class="ui row">
-          <router-view />
-        </div>
-        <div class="ui row">
-          <a href="https://github.com/func09/music_practice">
-            <i class="ui icon github"></i>func09/music_practice
-          </a>
+          <div class="modal-body">
+            <ul>
+              <li>
+                <router-link
+                  to="/practice01"
+                  class="item"
+                  @click.native="closeModal()"
+                  >Guitar Fret List</router-link
+                >
+              </li>
+              <li>
+                <router-link
+                  to="/practice02"
+                  class="item"
+                  @click.native="closeModal()"
+                  >Guitar Fret Board</router-link
+                >
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
+
+    <div class="container-fluid">
+      <router-view />
+    </div>
+
+    <div class="container-fluid">
+      <a href="https://github.com/func09/music_practice">
+        <i class="fab fa-github-square"></i>func09/music_practice
+      </a>
+    </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: "App",
+  methods: {
+    closeModal: function() {
+      // document.querySelector("menuModal").hide();
+    },
+  },
+};
+</script>
