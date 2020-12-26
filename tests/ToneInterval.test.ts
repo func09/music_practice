@@ -1,4 +1,31 @@
 import * as Tone from "tone";
+import Interval from "../src/core/Interval";
+
+describe("Parse interval name", () => {
+  test.each`
+    name      | expectedSize | expectedDegree
+    ${"1st"}  | ${0}         | ${1}
+    ${"4th"}  | ${5}         | ${4}
+    ${"5th"}  | ${7}         | ${5}
+    ${"8th"}  | ${12}        | ${8}
+    ${"m2nd"} | ${1}         | ${2}
+    ${"M2nd"} | ${2}         | ${2}
+    ${"m3rd"} | ${3}         | ${3}
+    ${"M3rd"} | ${4}         | ${3}
+    ${"m6th"} | ${8}         | ${6}
+    ${"M6th"} | ${9}         | ${6}
+    ${"m7th"} | ${10}        | ${7}
+    ${"M7th"} | ${11}        | ${7}
+    ${"b5th"} | ${6}         | ${5}
+  `(
+    "$name: semitoneSize == $expectedSize, degree == $expectedDegree",
+    ({ name, expectedSize, expectedDegree }) => {
+      const result = Interval.parse(name);
+      expect(result.size).toBe(expectedSize);
+      expect(result.degree).toBe(expectedDegree);
+    }
+  );
+});
 
 type DegreeName =
   | "1st"
