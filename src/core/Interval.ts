@@ -18,6 +18,20 @@ export class Interval {
     return new Interval(name);
   }
 
+  get harmonyType(): string {
+    switch (this.degree) {
+      case 2:
+      case 7:
+        return "dissonance";
+      case 3:
+      case 6:
+        return "consonant";
+      default:
+        // 1,4,5,8
+        return "perfect";
+    }
+  }
+
   get additionalSize(): number {
     switch (this.type) {
       case "augument":

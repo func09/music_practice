@@ -9,9 +9,9 @@
           <tr>
             <th>Root</th>
             <th>Interval</th>
-            <th>Type</th>
-            <th>Semitone size</th>
             <th>Note</th>
+            <th>Semitone size</th>
+            <th>Harmony</th>
             <th>PLAY</th>
           </tr>
         </thead>
@@ -19,10 +19,14 @@
           <tr v-for="intervalName in intervalNames" v-bind:key="intervalName">
             <td>{{ note }}</td>
             <td>{{ intervalName }}</td>
-            <td>{{ getInterval(intervalName).type }}</td>
-            <td>{{ getInterval(intervalName).size }}</td>
             <td>
               {{ getNewNote(note, intervalName) }}
+            </td>
+            <td>{{ getInterval(intervalName).size }}</td>
+            <td>
+              <span class="badge" v-bind:class="getBadgeStyle(intervalName)"
+                >{{ getInterval(intervalName).harmonyType }}
+              </span>
             </td>
             <td>
               <button
@@ -47,6 +51,14 @@ import * as Tone from "tone";
 export default {
   name: "Plactice03",
   methods: {
+    getBadgeStyle: function(intervalName) {
+      const interval = Interval.parse(intervalName);
+      return {
+        "btn-success": interval.harmonyType == "perfect",
+        "btn-warning": interval.harmonyType == "consonant",
+        "btn-danger": interval.harmonyType == "dissonance",
+      };
+    },
     getNewNote: function(note, intervalName) {
       const interval = Interval.parse(intervalName);
       return Tone.Frequency(note)
