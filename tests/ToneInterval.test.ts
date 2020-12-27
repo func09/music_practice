@@ -1,6 +1,28 @@
 import * as Tone from "tone";
 import { Interval } from "../src/core/Interval";
 
+describe("Interval diff", () => {
+  test.each`
+    x       | y        | expected
+    ${"C4"} | ${"C4"}  | ${"1st"}
+    ${"C4"} | ${"C#4"} | ${"m2nd"}
+    ${"C4"} | ${"D4"}  | ${"M2nd"}
+    ${"C4"} | ${"D#4"} | ${"m3rd"}
+    ${"C4"} | ${"E4"}  | ${"M3rd"}
+    ${"C4"} | ${"F4"}  | ${"4th"}
+    ${"C4"} | ${"F#4"} | ${"b5th"}
+    ${"C4"} | ${"G4"}  | ${"5th"}
+    ${"C4"} | ${"G#4"} | ${"m6th"}
+    ${"C4"} | ${"A4"}  | ${"M6th"}
+    ${"C4"} | ${"A#4"} | ${"m7th"}
+    ${"C4"} | ${"B4"}  | ${"M7th"}
+    ${"C4"} | ${"C5"}  | ${"8th"}
+  `("$x ... $y == $expected", ({ x, y, expected }) => {
+    const freq = Interval.diffByNotes(x, y);
+    expect(freq?.name).toBe(expected);
+  });
+});
+
 describe("Parse interval name", () => {
   test.each`
     name      | expectedSize | expectedDegree
