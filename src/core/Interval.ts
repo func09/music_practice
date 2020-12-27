@@ -1,42 +1,13 @@
-export type IntervalType =
-  | "perfect"
-  | "major"
-  | "minor"
-  | "augument"
-  | "deminish";
-export type IntervalName =
-  | "1st"
-  | "4th"
-  | "5th"
-  | "8th"
-  | "M2nd"
-  | "m2nd"
-  | "M3nd"
-  | "m3nd"
-  | "M6th"
-  | "M7th"
-  | "b1th"
-  | "b2th"
-  | "b3th"
-  | "b4th"
-  | "b5th"
-  | "b6th"
-  | "b7th"
-  | "b8th"
-  | "#1th"
-  | "#2th"
-  | "#3th"
-  | "#4th"
-  | "#5th"
-  | "#6th"
-  | "#7th"
-  | "#8th";
+import { IntervalName, IntervalType } from "../types";
+import { IntervalNames } from "../constraints";
 
-class Interval {
+export class Interval {
+  static readonly Names = IntervalNames;
+
   type: IntervalType = "perfect";
   name: IntervalName;
-  degree: number = 1;
-  baseSize: number = 0;
+  degree = 1;
+  baseSize = 0;
 
   constructor(name: IntervalName) {
     this.name = name;
@@ -115,5 +86,3 @@ class Interval {
     }
   }
 }
-
-export default Interval;
