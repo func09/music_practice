@@ -23,6 +23,10 @@ export class Interval {
     noteA: Tone.Unit.Note,
     noteB: Tone.Unit.Note
   ): Interval | null {
+    if (noteA == "D3" && noteB == "G3") {
+      console.log(Tone.Frequency(noteA).toMidi());
+      console.log(Tone.Frequency(noteB).toMidi());
+    }
     const diff: number = Math.abs(
       Tone.Frequency(noteA).toMidi() - Tone.Frequency(noteB).toMidi()
     );

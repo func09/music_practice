@@ -17,6 +17,7 @@ describe("Interval diff", () => {
     ${"C4"} | ${"A#4"} | ${"m7th"}
     ${"C4"} | ${"B4"}  | ${"M7th"}
     ${"C4"} | ${"C5"}  | ${"8th"}
+    ${"D3"} | ${"G3"}  | ${"4th"}
   `("$x ... $y == $expected", ({ x, y, expected }) => {
     const freq = Interval.diffByNotes(x, y);
     expect(freq?.name).toBe(expected);
