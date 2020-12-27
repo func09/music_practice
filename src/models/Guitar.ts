@@ -9,7 +9,7 @@ export default class Guitar {
   constructor(
     stringsSize = 6,
     fretsSize = 20,
-    tunings = ["E4", "B3", "G3", "D3", "A3", "E2"]
+    tunings = ["E4", "B3", "G3", "D3", "A2", "E2"]
   ) {
     this.stringsSize = stringsSize;
     this.fretsSize = fretsSize;

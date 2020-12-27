@@ -1,5 +1,6 @@
 import { IntervalName, IntervalType } from "../types";
-import { IntervalNames } from "../constraints";
+import { IntervalNames, IntervalMap } from "../constraints";
+import * as Tone from "tone";
 
 export class Interval {
   static readonly Names = IntervalNames;
@@ -16,6 +17,27 @@ export class Interval {
 
   static parse(name: IntervalName): Interval {
     return new Interval(name);
+  }
+
+  static diffByNotes(
+    noteA: Tone.Unit.Note,
+    noteB: Tone.Unit.Note
+  ): Interval | null {
+    if (noteA == "D3" && noteB == "G3") {
+      console.log(Tone.Frequency(noteA).toMidi());
+      console.log(Tone.Frequency(noteB).toMidi());
+    }
+    const diff: number = Math.abs(
+      Tone.Frequency(noteA).toMidi() - Tone.Frequency(noteB).toMidi()
+    );
+    var interval = IntervalMap.find((item) => {
+      return item.size == diff;
+    });
+    if (interval) {
+      return this.parse(interval.name);
+    } else {
+      return null;
+    }
   }
 
   get harmonyType(): string {
