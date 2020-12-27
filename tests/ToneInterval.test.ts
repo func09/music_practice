@@ -1,5 +1,5 @@
 import * as Tone from "tone";
-import Interval from "../src/core/Interval";
+import { Interval } from "../src/core/Interval";
 
 describe("Parse interval name", () => {
   test.each`
