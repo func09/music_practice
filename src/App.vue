@@ -41,6 +41,14 @@
                   >Guitar Fret Board</router-link
                 >
               </li>
+              <li>
+                <router-link
+                  to="/practice03"
+                  class="item"
+                  @click.native="closeModal()"
+                  >Tone Interval Table</router-link
+                >
+              </li>
             </ul>
           </div>
         </div>
