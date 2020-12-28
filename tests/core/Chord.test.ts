@@ -1,5 +1,5 @@
 import * as Tone from "tone";
-import { IntervalName, NoteName } from "../../src/types";
+import { IntervalName } from "../../src/types";
 import { Chord, ChordPattern } from "../../src/core/Chord";
 
 describe("Chord", () => {

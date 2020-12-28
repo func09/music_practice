@@ -3,8 +3,6 @@
 export type PitchNamePrefix = "C" | "D" | "E" | "F" | "G" | "A" | "B";
 export type PitchNameSuffix = "#" | "b" | "##" | "bb";
 export type Octave = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
-export type PitchName = `${PitchNamePrefix}` | `${PitchNamePrefix}${PitchNameSuffix}`
-export type NoteName = `${PitchName}${Octave}`
 
 // 音程
 // https://ja.wikipedia.org/wiki/%E9%9F%B3%E7%A8%8B#%E5%8D%94%E5%92%8C%E9%9F%B3%E7%A8%8B%E3%83%BB%E4%B8%8D%E5%8D%94%E5%92%8C%E9%9F%B3%E7%A8%8B

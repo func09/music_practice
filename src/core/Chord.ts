@@ -1,4 +1,4 @@
-import { NoteName, IntervalName } from "../types";
+import { IntervalName } from "../types";
 import { Interval } from "./Interval";
 import * as Tone from "tone";
 
@@ -12,10 +12,10 @@ export const ChordPattern: { [name: string]: Array<IntervalName> } = {
 };
 
 export class Chord {
-  rootNote: NoteName;
+  rootNote: Tone.Unit.Note;
   intervals: Array<IntervalName>;
 
-  constructor(rootNote: NoteName, intervals: Array<IntervalName>) {
+  constructor(rootNote: Tone.Unit.Note, intervals: Array<IntervalName>) {
     this.rootNote = rootNote;
     this.intervals = intervals;
   }
