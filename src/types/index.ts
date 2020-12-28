@@ -1,3 +1,11 @@
+// 音名
+// See https://ja.wikipedia.org/wiki/%E9%9F%B3%E5%90%8D%E3%83%BB%E9%9A%8E%E5%90%8D%E8%A1%A8%E8%A8%98
+export type PitchNamePrefix = "C" | "D" | "E" | "F" | "G" | "A" | "B";
+export type PitchNameSuffix = "#" | "b" | "##" | "bb";
+export type Octave = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
+
+// 音程
+// https://ja.wikipedia.org/wiki/%E9%9F%B3%E7%A8%8B#%E5%8D%94%E5%92%8C%E9%9F%B3%E7%A8%8B%E3%83%BB%E4%B8%8D%E5%8D%94%E5%92%8C%E9%9F%B3%E7%A8%8B
 export type IntervalType =
   | "perfect"
   | "major"
@@ -5,6 +13,8 @@ export type IntervalType =
   | "augument"
   | "deminish";
 
+// 音程名
+// See https://ja.wikipedia.org/wiki/%E9%9F%B3%E7%A8%8B#%E9%9F%B3%E7%A8%8B%E5%90%8D
 export type IntervalName =
   | "1st"
   | "4th"

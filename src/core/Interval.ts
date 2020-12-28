@@ -30,7 +30,7 @@ export class Interval {
     const diff: number = Math.abs(
       Tone.Frequency(noteA).toMidi() - Tone.Frequency(noteB).toMidi()
     );
-    var interval = IntervalMap.find((item) => {
+    const interval = IntervalMap.find((item) => {
       return item.size == diff;
     });
     if (interval) {
