@@ -25,12 +25,7 @@
           <td>{{ fret.note }}</td>
           <td>{{ fret.frequency }}</td>
           <td>
-            <button
-              class="btn btn-secondary btn-sm"
-              v-on:click="playNote(fret.note)"
-            >
-              <i class="fas fa-headphones-alt"></i> PLAY
-            </button>
+            <Player v-bind:score="bindScore(fret)"></Player>
           </td>
         </tr>
       </tbody>
@@ -41,21 +36,22 @@
 <script>
 import * as Tone from "tone";
 import Guitar from "../models/Guitar";
+import Player from "../components/Player";
 const guitar = new Guitar();
 export default {
   name: "Plactice01",
   methods: {
-    playNote: async function(note) {
-      await Tone.start();
-      const synth = new Tone.Synth().toDestination();
-      console.log(note);
-      synth.triggerAttackRelease(note, "4n");
+    bindScore: function(fret) {
+      return [{ notes: [fret.note], due: "4n" }];
     },
   },
   data: () => {
     return {
       guitar: guitar,
     };
+  },
+  components: {
+    Player,
   },
 };
 </script>
