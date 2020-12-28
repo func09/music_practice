@@ -29,12 +29,7 @@
               </span>
             </td>
             <td>
-              <button
-                class="btn btn-primary btn-sm"
-                v-on:click="playTones(note, intervalName)"
-              >
-                PLAY
-              </button>
+              <Player v-bind:score="bindScore(note, intervalName)"></Player>
             </td>
           </tr>
         </tbody>
@@ -47,10 +42,15 @@
 import { Tone12, IntervalTypes } from "../constraints";
 import { Interval } from "../core/Interval";
 import * as Tone from "tone";
+import Player from "../components/Player";
 
 export default {
   name: "Plactice03",
   methods: {
+    bindScore: function(note, intervalName) {
+      const newNote = this.getNewNote(note, intervalName);
+      return [{ notes: [note, newNote], due: "1n" }];
+    },
     getBadgeStyle: function(intervalName) {
       const interval = Interval.parse(intervalName);
       return {
@@ -69,13 +69,6 @@ export default {
     getInterval: function(intervalName) {
       return Interval.parse(intervalName);
     },
-    playTones: async function(note, intervalName) {
-      await Tone.start();
-      const now = Tone.now();
-      const synth = new Tone.PolySynth().toDestination();
-      const newNote = this.getNewNote(note, intervalName);
-      synth.triggerAttackRelease([note, newNote], "4n", now);
-    },
   },
   data: () => {
     return {
@@ -83,6 +76,9 @@ export default {
       intervalTypes: IntervalTypes,
       tones: Tone12,
     };
+  },
+  components: {
+    Player,
   },
   computed: {
     notes: () => {
