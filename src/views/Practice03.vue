@@ -1,7 +1,6 @@
 <template>
   <div class="Plactice01">
     <h1>Intervals</h1>
-
     <table class="table">
       <thead>
         <tr>
@@ -36,7 +35,9 @@
 <script>
 import { Note, Interval, Scale } from "@tonaljs/tonal";
 import Player from "../components/Player";
+
 const scale = Scale.get("C4 chromatic");
+
 export default {
   name: "Plactice03",
   methods: {
@@ -59,7 +60,7 @@ export default {
     },
   },
   computed: {
-    items: () => {
+    items: function() {
       const _items = [];
       for (const note of scale.notes) {
         for (const interval of scale.intervals) {

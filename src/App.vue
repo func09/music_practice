@@ -49,6 +49,22 @@
                   >Tone Interval Table</router-link
                 >
               </li>
+              <li>
+                <router-link
+                  to="/practice04"
+                  class="item"
+                  @click.native="closeModal()"
+                  >Scales</router-link
+                >
+              </li>
+              <li>
+                <router-link
+                  to="/practice05"
+                  class="item"
+                  @click.native="closeModal()"
+                  >Chords</router-link
+                >
+              </li>
             </ul>
           </div>
         </div>
