@@ -2,90 +2,98 @@
   <div class="Plactice01">
     <h1>Intervals</h1>
 
-    <section v-for="note in notes" v-bind:key="note">
-      <h2>{{ note }}</h2>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Root</th>
-            <th>Interval</th>
-            <th>Note</th>
-            <th>Semitone size</th>
-            <th>Harmony</th>
-            <th>PLAY</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="intervalName in intervalNames" v-bind:key="intervalName">
-            <td>{{ note }}</td>
-            <td>{{ intervalName }}</td>
-            <td>
-              {{ getNewNote(note, intervalName) }}
-            </td>
-            <td>{{ getInterval(intervalName).size }}</td>
-            <td>
-              <span class="badge" v-bind:class="getBadgeStyle(intervalName)"
-                >{{ getInterval(intervalName).harmonyType }}
-              </span>
-            </td>
-            <td>
-              <Player v-bind:score="bindScore(note, intervalName)"></Player>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Root</th>
+          <th>Interval</th>
+          <th>Note</th>
+          <th>Semitone count</th>
+          <th>Harmony</th>
+          <th>PLAY</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in items" v-bind:key="item.name">
+          <td>{{ item.rootNote.name }}</td>
+          <td>{{ item.interval.name }}</td>
+          <td>{{ item.otherNote.name }}</td>
+          <td>{{ item.interval.chroma }}</td>
+          <td>
+            <span class="badge" v-bind:class="getBadgeStyle(item.harmony)">
+              {{ item.harmony }}
+            </span>
+          </td>
+          <td>
+            <Player v-bind:score="getScore(item.notes)"></Player>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
-import { Tone12, IntervalTypes } from "../constraints";
-import { Interval } from "../core/Interval";
-import * as Tone from "tone";
+import { Note, Interval, Scale } from "@tonaljs/tonal";
 import Player from "../components/Player";
-
+const scale = Scale.get("C4 chromatic");
 export default {
   name: "Plactice03",
   methods: {
-    bindScore: function(note, intervalName) {
-      const newNote = this.getNewNote(note, intervalName);
-      return [{ notes: [note, newNote], due: "1n" }];
-    },
-    getBadgeStyle: function(intervalName) {
-      const interval = Interval.parse(intervalName);
+    getBadgeStyle: (harmony) => {
       return {
-        "btn-success": interval.harmonyType == "perfect",
-        "btn-warning": interval.harmonyType == "consonant",
-        "btn-danger": interval.harmonyType == "dissonance",
+        "btn-success": harmony.match(/^p/i),
+        "btn-warning": harmony.match(/^c/i),
+        "btn-danger": harmony.match(/^d/i),
       };
     },
-    getNewNote: function(note, intervalName) {
-      const interval = Interval.parse(intervalName);
-      return Tone.Frequency(note)
-        .transpose(interval.size)
-        .toNote();
-    },
-
-    getInterval: function(intervalName) {
-      return Interval.parse(intervalName);
+    getScore: (notes) => {
+      return [
+        {
+          notes: notes.map((n) => {
+            return n.name;
+          }),
+          due: "1n",
+        },
+      ];
     },
   },
-  data: () => {
-    return {
-      intervalNames: Interval.Names,
-      intervalTypes: IntervalTypes,
-      tones: Tone12,
-    };
+  computed: {
+    items: () => {
+      const _items = [];
+      for (const note of scale.notes) {
+        for (const interval of scale.intervals) {
+          const n = Note.get(note);
+          const o = Note.get(Note.transpose(n, interval));
+          const i = Interval.get(interval);
+          let h = "";
+          switch (true) {
+            case /[356](d|m|M)/.test(i.name):
+              h = "Consonant";
+              break;
+            case /[1458](P)/.test(i.name):
+              h = "Perfect";
+              break;
+            default:
+              h = "Dissonance";
+              break;
+          }
+
+          _items.push({
+            name: `${note}:${interval}`,
+            rootNote: n,
+            otherNote: o,
+            interval: i,
+            notes: [n, o],
+            harmony: h,
+          });
+        }
+      }
+      return _items;
+    },
   },
   components: {
     Player,
-  },
-  computed: {
-    notes: () => {
-      return Tone12.map((toneName) => {
-        return `${toneName}4`;
-      });
-    },
   },
 };
 </script>
