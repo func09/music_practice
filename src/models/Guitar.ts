@@ -1,34 +1,42 @@
 import * as Tone from "tone";
+import { Note, Interval, NoteLiteral } from "@tonaljs/tonal";
 import _ from "lodash";
+
+export class GuiterFret {
+  stringNo = 1;
+  fretNo = 0;
+  openTuning: NoteLiteral = "E4";
+  note: NoteLiteral = "E4";
+  constructor(stringNo: number, fretNo: number, openTuning: NoteLiteral) {
+    this.stringNo = stringNo;
+    this.fretNo = fretNo;
+    this.openTuning = openTuning;
+    this.note = Note.transpose(openTuning, Interval.fromSemitones(fretNo));
+  }
+}
 
 export default class Guitar {
   stringsSize: number;
   fretsSize: number;
-  tunings: Array<string>;
+  tunings: Array<NoteLiteral>;
 
   constructor(
     stringsSize = 6,
     fretsSize = 20,
-    tunings = ["E4", "B3", "G3", "D3", "A2", "E2"]
+    tunings: Array<NoteLiteral> = ["E4", "B3", "G3", "D3", "A2", "E2"]
   ) {
     this.stringsSize = stringsSize;
     this.fretsSize = fretsSize;
     this.tunings = tunings;
   }
 
-  getOpenFrequency(stringNo = 0): Tone.FrequencyClass {
-    return Tone.Frequency(this.tunings[stringNo]);
-  }
-
-  getFret(stringNo = 0, fretNo = 0) {
-    return this.frets.find((fret) => {
-      return fret.stringNo == stringNo && fret.fretNo == fretNo;
-    });
+  getFret(stringNo = 1, fretNo = 0) {
+    return new GuiterFret(stringNo, fretNo, this.tunings[stringNo - 1]);
   }
 
   get stringNos(): Array<number> {
     return [...Array(this.stringsSize)].map((item, index) => {
-      return index;
+      return index + 1;
     });
   }
 
@@ -36,29 +44,5 @@ export default class Guitar {
     return [...Array(this.fretsSize)].map((item, index) => {
       return index;
     });
-  }
-
-  get strings() {
-    return _.groupBy(_.sortBy(this.frets, ["stringNo", "fretNo"]), "stringNo");
-  }
-
-  get frets() {
-    const _ = [];
-    for (let sNum = 0; sNum < this.stringsSize; sNum++) {
-      const openFrequency: Tone.FrequencyClass = this.getOpenFrequency(sNum);
-      for (let fNum = 0; fNum < this.fretsSize + 1; fNum++) {
-        const fretFrequency: Tone.FrequencyClass = openFrequency.transpose(
-          fNum
-        );
-        _.push({
-          name: `${sNum}.${fNum}`,
-          stringNo: sNum,
-          fretNo: fNum,
-          note: fretFrequency.toNote(),
-          frequency: fretFrequency.toFrequency(),
-        });
-      }
-    }
-    return _;
   }
 }
