@@ -23,50 +23,26 @@
       </a>
       <ul>
         <li>
-          <router-link
-            to="/practice01"
-            class="item"
-            @click.native="closeModal()"
-            >Guitar Fret List</router-link
-          >
+          <router-link to="/practice01" class="item">Notes</router-link>
         </li>
         <li>
-          <router-link
-            to="/practice02"
-            class="item"
-            @click.native="closeModal()"
+          <router-link to="/practice02" class="item"
             >Guitar Fret Board</router-link
           >
         </li>
         <li>
-          <router-link
-            to="/practice03"
-            class="item"
-            @click.native="closeModal()"
+          <router-link to="/practice03" class="item"
             >Tone Interval Table</router-link
           >
         </li>
         <li>
-          <router-link
-            to="/practice04"
-            class="item"
-            @click.native="closeModal()"
-            >Scales</router-link
-          >
+          <router-link to="/practice04" class="item">Scales</router-link>
         </li>
         <li>
-          <router-link
-            to="/practice05"
-            class="item"
-            @click.native="closeModal()"
-            >Chords</router-link
-          >
+          <router-link to="/practice05" class="item">Chords</router-link>
         </li>
         <li>
-          <router-link
-            to="/practice06"
-            class="item"
-            @click.native="closeModal()"
+          <router-link to="/practice06" class="item"
             >Interal Matrix</router-link
           >
         </li>
@@ -78,10 +54,5 @@
 <script>
 export default {
   name: "App",
-  methods: {
-    closeModal: function() {
-      // document.querySelector("menuModal").hide();
-    },
-  },
 };
 </script>
