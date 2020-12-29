@@ -1,6 +1,6 @@
 <template>
-  <button class="btn btn-primary btn-sm" v-on:click="playSound">
-    <i class="fas fa-headphones-alt"></i>
+  <button class="ui button small" v-on:click="playSound">
+    <i class="ui icon music"></i>
   </button>
 </template>
 

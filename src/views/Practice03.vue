@@ -1,9 +1,9 @@
 <template>
   <div class="Plactice01">
-    <h1>Intervals</h1>
-    <table class="table">
+    <h1 class="ui haeder dividing">Intervals</h1>
+    <table class="ui table celled fixed definition unstackable">
       <thead>
-        <tr>
+        <tr class="center aligned">
           <th>Root</th>
           <th>Interval</th>
           <th>Note</th>
@@ -13,13 +13,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in items" v-bind:key="item.name">
+        <tr v-for="item in items" v-bind:key="item.name" class="center aligned">
           <td>{{ item.rootNote.name }}</td>
           <td>{{ item.interval.name }}</td>
           <td>{{ item.otherNote.name }}</td>
           <td>{{ item.interval.chroma }}</td>
           <td>
-            <span class="badge" v-bind:class="getBadgeStyle(item.harmony)">
+            <span class="ui label" v-bind:class="getBadgeStyle(item.harmony)">
               {{ item.harmony }}
             </span>
           </td>
@@ -33,19 +33,20 @@
 </template>
 
 <script>
-import { Note, Interval, Scale } from "@tonaljs/tonal";
+import { Note, Interval, Scale, Range } from "@tonaljs/tonal";
 import Player from "../components/Player";
 
 const scale = Scale.get("C4 chromatic");
+const notes = Range.chromatic(["C3", "C4"], { sharps: true });
 
 export default {
   name: "Plactice03",
   methods: {
     getBadgeStyle: (harmony) => {
       return {
-        "btn-success": harmony.match(/^p/i),
-        "btn-warning": harmony.match(/^c/i),
-        "btn-danger": harmony.match(/^d/i),
+        green: harmony.match(/^p/i),
+        yellow: harmony.match(/^c/i),
+        red: harmony.match(/^d/i),
       };
     },
     getScore: (notes) => {
@@ -62,7 +63,7 @@ export default {
   computed: {
     items: function() {
       const _items = [];
-      for (const note of scale.notes) {
+      for (const note of notes) {
         for (const interval of scale.intervals) {
           const n = Note.get(note);
           const o = Note.get(Note.transpose(n, interval));

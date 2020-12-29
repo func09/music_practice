@@ -1,31 +1,24 @@
 <template>
   <div class="Plactice01">
-    <h1>Guitar Fret List</h1>
-    <p class="lead">
-      Generate fret tones by tuning the open strings of a guitar.
-    </p>
-    <table class="table table-dark table-striped table-bordered table-sm">
+    <h1 class="ui header dividing">Notes</h1>
+    <table class="ui table celled fixed definition unstackable">
       <thead>
-        <tr class="text-center">
-          <th>String No</th>
-          <th>Fret No</th>
-          <th>Note</th>
+        <tr class="ui center aligned">
+          <th></th>
           <th>Hlz</th>
           <th>PLAY</th>
         </tr>
       </thead>
       <tbody>
         <tr
-          class="text-center"
-          v-bind:key="fret.name"
-          v-for="fret in guitar.frets"
+          class="ui center aligned"
+          v-bind:key="note.name"
+          v-for="note in notes"
         >
-          <td>{{ fret.stringNo + 1 }}</td>
-          <td>{{ fret.fretNo }}</td>
-          <td>{{ fret.note }}</td>
-          <td>{{ fret.frequency }}</td>
+          <td>{{ note.name }}</td>
+          <td>{{ note.freq }}</td>
           <td>
-            <Player v-bind:score="bindScore(fret)"></Player>
+            <Player v-bind:score="bindScore(note)"></Player>
           </td>
         </tr>
       </tbody>
@@ -34,21 +27,29 @@
 </template>
 
 <script>
-import * as Tone from "tone";
-import Guitar from "../models/Guitar";
+import { Note, Range } from "@tonaljs/tonal";
+
 import Player from "../components/Player";
-const guitar = new Guitar();
+
+const store = {
+  state: {
+    notes: Range.chromatic(["C3", "C6"], { sharps: true }).map((n) => {
+      return Note.get(n);
+    }),
+  },
+};
+
 export default {
   name: "Plactice01",
   methods: {
-    bindScore: function(fret) {
-      return [{ notes: [fret.note], due: "4n" }];
+    bindScore: function(note) {
+      return [{ notes: [note.name], due: "8n" }];
     },
   },
-  data: () => {
-    return {
-      guitar: guitar,
-    };
+  computed: {
+    notes: () => {
+      return store.state.notes;
+    },
   },
   components: {
     Player,

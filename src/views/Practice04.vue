@@ -1,17 +1,17 @@
 <template>
   <div class="Plactice01">
-    <h1>Scales</h1>
-    <table class="table  table-striped table-bordered ">
+    <h1 class="ui header dividing">Scales</h1>
+    <table class="ui table celled fixed definition unstackable">
       <thead>
-        <tr>
-          <th>Root</th>
+        <tr class="center aligned">
+          <th>Name</th>
           <th>Intervals</th>
           <th>Notes</th>
           <th>PLAY</th>
         </tr>
       </thead>
       <tbody v-for="item in items" v-bind:key="item.name">
-        <tr>
+        <tr class="center aligned">
           <td>{{ item.name }}</td>
           <td>{{ item.intervals.join(", ") }}</td>
           <td>{{ item.notes.join(", ") }}</td>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { Note, Interval, Scale } from "@tonaljs/tonal";
+import { Note, Interval, Scale, Range } from "@tonaljs/tonal";
 import Player from "../components/Player";
 
 const defaultScales = [
@@ -34,7 +34,7 @@ const defaultScales = [
   "harmonic minor",
 ];
 const defaultKey = "C4";
-const defaultNotes = Scale.get("C3 chromatic").notes;
+const defaultNotes = Range.chromatic(["C3", "C4"], { sharps: true });
 
 const store = {
   state: {
