@@ -5,7 +5,9 @@
         <tr class="ui center aligned">
           <th></th>
           <th v-for="string in strings" v-bind:key="string">
-            {{ string }}
+            <span class="ui label green">
+              {{ string }}
+            </span>
           </th>
         </tr>
       </thead>
@@ -18,7 +20,7 @@
             v-on:click="onSelect(string, fret)"
             v-bind:class="{ positive: isSelected(string, fret) }"
           >
-            {{ renderFret(string, fret) }}
+            <b>{{ renderFret(string, fret) }}</b>
             <div>{{ renderInterval(string, fret) }}</div>
           </td>
         </tr>
@@ -39,7 +41,6 @@ const store = new Vuex.Store({
   },
   mutations: {
     onSelect(state) {
-      console.log(state);
       state;
     },
   },
@@ -93,7 +94,9 @@ export default {
           this.$store.state.selectedString,
           this.$store.state.selectedFret
         );
-        const interval = Interval.distance(otherFret.note, fret.note);
+        const interval = Interval.simplify(
+          Interval.distance(otherFret.note, fret.note)
+        );
         return `(${interval})`;
       } else {
         return "";

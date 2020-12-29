@@ -1,62 +1,107 @@
 <template>
   <div class="Plactice01">
     <h1 class="ui header dividing">Chords</h1>
-    <table class="ui table celled fixed definition unstackable">
-      <thead>
-        <tr class="center aligned">
-          <th>Short Name</th>
-          <th>Full Name</th>
-          <th>Intervals</th>
-          <th>Notes</th>
-          <th>Tonic</th>
-          <th>PLAY</th>
-        </tr>
-      </thead>
-      <tbody v-for="item in items" v-bind:key="item.name">
-        <tr class="center aligned">
-          <td>{{ item.symbol }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.intervals.join(", ") }}</td>
-          <td>{{ item.notes.join(", ") }}</td>
-          <td>{{ item.tonic }}</td>
-          <td><Player v-bind:score="getScore(item.notes)"></Player></td>
-        </tr>
-      </tbody>
-    </table>
+
+    <section
+      v-for="chordName in chordNames"
+      v-bind:key="chordName"
+      class="ui segments"
+    >
+      <div class="ui segment">
+        <h3 class="ui header">{{ chordName }}</h3>
+      </div>
+      <div class="ui segment">
+        <div class="ui six doubling cards fluid">
+          <div
+            class="ui card"
+            v-for="chord in getChords(chordName, notes)"
+            v-bind:key="chord.name"
+          >
+            <div class="ui content">
+              <div class="header">
+                {{ chord.symbol }}
+              </div>
+            </div>
+            <table class="ui table celled attached unstackable small compact">
+              <tbody>
+                <tr
+                  class="center aligned"
+                  v-for="(interval, index) in chord.intervals"
+                  v-bind:key="interval"
+                >
+                  <td>
+                    <span
+                      class="ui label"
+                      v-bind:class="getBadgeStyle(interval)"
+                    >
+                      {{ interval }}
+                    </span>
+                  </td>
+                  <td>
+                    {{ simplifyNote(chord.notes[index]) }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <Player
+              v-bind:score="getScore(chord)"
+              class="large bottom attached"
+            ></Player>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
+import Vuex from "vuex";
 import { Note, Interval, Scale, Chord, ChordType, Range } from "@tonaljs/tonal";
 import Player from "../components/Player";
 
-const defaultNotes = Range.chromatic(["C3", "B3"], { sharps: true });
-
-const defaultChords = ["major", "major seventh", "minor", "minor seventh"];
-const chords = defaultChords
-  .map((name) => {
-    return defaultNotes.map((note) => {
-      return Chord.getChord(name, note);
-    });
-  })
-  .flat();
-
-const store = {
+const store = new Vuex.Store({
   state: {
-    chords: chords,
+    notes: Range.chromatic(["C3", "B3"], { sharps: true }),
+    chordNames: ["major", "major seventh", "minor", "minor seventh"],
   },
-};
+});
 
 export default {
   name: "Plactice05",
+  store: store,
   methods: {
-    getScore: function(notes) {
-      return [{ notes: notes, due: "4n" }];
+    simplifyNote(note) {
+      return Note.simplify(note);
+    },
+    pitchName(note) {
+      return Note.pitchClass(note);
+    },
+    getScore: function(chord) {
+      const notes = chord.notes.map((note) => {
+        return Note.simplify(note);
+      });
+      return [{ notes: notes, due: "1n" }];
+    },
+    getChords: function(chordName, notes) {
+      return notes
+        .map((note) => {
+          return Chord.getChord(chordName, note);
+        })
+        .flat();
+    },
+    getBadgeStyle: (harmony) => {
+      return {
+        green: harmony.match(/p$/i),
+        yellow: harmony.match(/(^[36])/i),
+      };
     },
   },
   computed: {
-    items: function() {
-      return store.state.chords;
+    chordNames: function() {
+      return this.$store.state.chordNames;
+    },
+    notes: function() {
+      return this.$store.state.notes;
     },
   },
   components: {

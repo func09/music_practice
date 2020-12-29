@@ -1,7 +1,7 @@
 <template>
   <div class="Plactice01">
     <h1 class="ui header dividing">Notes</h1>
-    <table class="ui table celled fixed definition unstackable">
+    <table class="ui table celled fixed definition unstackable small compact">
       <thead>
         <tr class="ui center aligned">
           <th></th>

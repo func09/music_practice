@@ -1,5 +1,5 @@
 <template>
-  <button class="ui button small" v-on:click="playSound">
+  <button class="ui button small icon" v-on:click="playSound">
     <i class="ui icon music"></i>
   </button>
 </template>
